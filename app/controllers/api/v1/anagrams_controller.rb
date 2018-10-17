@@ -65,7 +65,6 @@ def anagram(*words_asked)
     answer[word_asked] = [] unless answer[word_asked].kind_of?(Array)
 
     # Sorted word
-    File.write('/tmp/test', word_asked)
     word_asked_sorted = word_asked.chars.sort(&:casecmp).join
 
     if word_list_hash[word_asked_sorted].nil?
@@ -92,6 +91,8 @@ module Api::V1
 
       answer = anagram(words_asked)
       # answer = words_asked
+
+      logger.info answer
 
       render json: "#{answer}"
     end
