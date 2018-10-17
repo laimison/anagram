@@ -94,14 +94,16 @@ module Api::V1
     
     # GET /v1/anagrams
     def index
-      words_asked = params['words'].split(',')
+      unless params['words'].nil?
+        words_asked = params['words'].split(',')
+        answer = anagram(words_asked)
+      
+        logger.info answer
 
-      answer = anagram(words_asked)
-      # answer = words_asked
-
-      logger.info answer
-
-      render json: "#{answer}"
+        render json: "#{answer}"
+      else
+        render json: "No parameters specified"
+      end
     end
 
     # GET /v1/anagrams/{id}

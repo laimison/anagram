@@ -7,7 +7,7 @@ module AnagramsGenerator
     end
     
     def use_word_list
-      puts 'Executing use_word_list - I call this from controller'
+      puts 'Executing use_word_list - in this case I call this from controller'
       @myhash
     end
   end
