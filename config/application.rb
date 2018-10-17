@@ -21,7 +21,7 @@ module Anagram
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     
-    # Laimis - Added lib folder to the list of folder to be autoloaded
+    # Laimis - Added lib folder to the list of folders to be autoloaded
     config.autoload_paths << "#{Rails.root}/lib"
 
     # Settings in config/environments/* take precedence over those specified here.

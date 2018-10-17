@@ -1,13 +1,14 @@
+# lib/anagrams_generator/generate.rb
 module AnagramsGenerator
   class Generate
     def initialize
-      puts "---- AnagramsGenerator::Generate executed on startup"
-      File.write('/tmp/test3', 'executed')
-      @myhash = { "laimis": "123" }
+      puts 'Initializing AnagramsGenerator::Generate'
+      @myhash = { "this_is_my_big_hash_loaded_at_startup_if_initializers_called_this": "" }
     end
     
-    def mytest
-      puts @myhash
+    def use_word_list
+      puts 'Executing use_word_list - I call this from controller'
+      @myhash
     end
   end
 end

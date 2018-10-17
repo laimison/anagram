@@ -1,3 +1,10 @@
+# app/controllers/api/v1/anagrams_controller.rb
+puts MyAnagram.use_word_list
+
+# Laimis - this worked
+# something = AnagramsGenerator::GetHash.new
+# puts something.output_hash
+
 # require 'mixlib/shellout'
 require 'json'
 require 'pp'
@@ -7,10 +14,6 @@ require 'pp'
 #   so.run_command
 #   so
 # end
-
-# Laimis - this worked
-# something = AnagramsGenerator::Generate.new
-# puts something.mytest
 
 def anagram(*words_asked)
   # Do I have sorted file?
