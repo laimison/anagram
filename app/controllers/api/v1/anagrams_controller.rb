@@ -8,9 +8,13 @@ require 'pp'
 #   so
 # end
 
+# Laimis - this worked
+# something = AnagramsGenerator::Generate.new
+# puts something.mytest
+
 def anagram(*words_asked)
   # Do I have sorted file?
-  unless File.exists?('lib/anagram/word_list_sorted.txt')
+  unless File.exists?('lib/anagrams_generator/word_list_sorted.txt')
     # Faster approach using Shell on Linux than using Ruby .sort
     # so_sort = shell_out('sort word_list.txt -o word_list_sorted.txt')
 
@@ -20,16 +24,16 @@ def anagram(*words_asked)
     #   puts so_sort.stderr
     #   puts 'Warning. Sorting was not successful. The issue with "sort" command. Using alternative way with Ruby tools ...'
 
-      file_sorted_array = File.readlines('lib/anagram/word_list.txt').sort
-      File.open('lib/anagram/word_list_sorted.txt','w') do |file|
+      file_sorted_array = File.readlines('lib/anagrams_generator/word_list.txt').sort
+      File.open('lib/anagrams_generator/word_list_sorted.txt','w') do |file|
         file.puts file_sorted_array
       end
     # end
   end
 
-  unless File.exists?('lib/anagram/word_list.json')
+  unless File.exists?('lib/anagrams_generator/word_list.json')
     # Read file
-    word_list_file = File.read('lib/anagram/word_list_sorted.txt')
+    word_list_file = File.read('lib/anagrams_generator/word_list_sorted.txt')
 
     # Create hash which will be final one for anagram queries
     word_list_hash = Hash.new
@@ -41,7 +45,7 @@ def anagram(*words_asked)
       word_original = line.chomp
 
       # Create key + anagrams array per word
-      word_list_hash[word_sorted] = [] unless word_list_hash[word_sorted].kind_of?(Array)
+      word_list_hash[word_sorted] ||= []
 
       # Add anagram word if not already added
       unless word_list_hash[word_sorted].include?(word_original)
@@ -50,11 +54,11 @@ def anagram(*words_asked)
     end
 
     # Generate word_list.json so this file contains anagrams for word that visitor is expected to look at!
-    File.open("lib/anagram/word_list.json","w") do |f|
+    File.open("lib/anagrams_generator/word_list.json","w") do |f|
       f.write(word_list_hash.to_json)
     end
   else
-    json_file = File.read('lib/anagram/word_list.json')
+    json_file = File.read('lib/anagrams_generator/word_list.json')
     word_list_hash = JSON.parse(json_file)
   end
 
@@ -62,7 +66,7 @@ def anagram(*words_asked)
   answer = Hash.new
 
   words_asked.flatten.each do |word_asked|
-    answer[word_asked] = [] unless answer[word_asked].kind_of?(Array)
+    answer[word_asked] ||= []
 
     # Sorted word
     word_asked_sorted = word_asked.chars.sort(&:casecmp).join
@@ -84,7 +88,7 @@ end
 
 module Api::V1
   class AnagramsController < ApplicationController
-
+    
     # GET /v1/anagrams
     def index
       words_asked = params['words'].split(',')

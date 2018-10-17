@@ -1,0 +1,1 @@
+MyAnagram = AnagramsGenerator::Generate.new
