@@ -33,5 +33,14 @@ Metrics/PerceivedComplexity:
 
 AllCops:
   Exclude:
-    - 'db/migrate/*.rb'
-    - 'db/schema.rb'
+    - 'Gemfile'
+    - 'app/mailers/application_mailer.rb'
+    - 'app/models/application_record.rb'
+    - 'bin/*'
+    - 'config/application.rb'
+    - 'config/environments/*'
+    - 'config/puma.rb'
+    - 'config/spring.rb'
+    - 'db/*'
+    - 'spec/rails_helper.rb'
+    - 'test/test_helper.rb'
