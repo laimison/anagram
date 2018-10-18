@@ -14,6 +14,6 @@ At index page [http://localhost:3000](http://localhost:3000) assuming that Rails
 
 ## Styling
 
-Code met rubocop styling based on configuration [rubocop.yml](rubocop.yml)
+Code met rubocop styling [.rubocop.yml](.rubocop.yml)
 
 `rubocop`
