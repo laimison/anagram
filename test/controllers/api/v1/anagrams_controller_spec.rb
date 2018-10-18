@@ -12,7 +12,7 @@ class AnagramsControllerTest < ActionDispatch::IntegrationTest
     get "/v1/anagrams", params: { words: ['piecrust'] }
     
     assert_response :success
-    assert_match('{"piecrust"=>["crepitus", "cuprites", "pictures"]}', response.body)
+    assert_match('{"piecrust"=>["cuprites", "pictures"]}', response.body)
   end  
   
   test 'GET /v1/anagrams?words=random_name - response code is success & anagrams not found' do
