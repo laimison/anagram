@@ -2,11 +2,12 @@ require 'json'
 require 'mixlib/shellout'
 
 module AnagramsGenerator
+  # Complete class to find anagrams
   class Generate
     def initialize
       puts 'Initializing AnagramsGenerator'
 
-      # This file must exists as data source for this application
+      # This file must exists as data source for this class
       @word_list_file = 'lib/anagrams_generator/word_list.txt'
 
       # These files are created by this class
@@ -21,54 +22,54 @@ module AnagramsGenerator
     end
 
     def word_list_create_sorted_file
-      unless File.exist?(@word_list_file_sorted)
-        # Faster approach using Shell on Linux than using Ruby .sort
-        so_sort = shell_out('sort ' + @word_list_file + ' -o ' + @word_list_file_sorted)
+      return if File.exist?(@word_list_file_sorted)
 
-        if so_sort.stderr.chomp.empty? && so_sort.exitstatus == 0
-          puts 'Sorted file created successfully at ' + @word_list_file_sorted
-        else
-          puts so_sort.stderr
-          puts 'Warning. Sorting was not successful. The issue with "sort" command. Using alternative way with Ruby tools ...'
+      # Faster approach using Shell on Linux than using Ruby .sort
+      so_sort = shell_out('sort ' + @word_list_file + ' -o ' + @word_list_file_sorted)
 
-          file_sorted_array = File.readlines(@word_list_file).sort
-          File.open(@word_list_file_sorted, 'w') do |file|
-            file.puts file_sorted_array
-          end
+      if so_sort.stderr.chomp.empty? && so_sort.exitstatus.zero?
+        puts 'Sorted file created successfully at ' + @word_list_file_sorted
+      else
+        puts so_sort.stderr
+        puts 'Warning. Sorting was not successful. The issue with "sort" command. Using alternative way with Ruby tools ...'
 
-          puts 'Sorted file created successfully at ' + @word_list_file_sorted
+        file_sorted_array = File.readlines(@word_list_file).sort
+        File.open(@word_list_file_sorted, 'w') do |file|
+          file.puts file_sorted_array
         end
+
+        puts 'Sorted file created successfully with fileutils at ' + @word_list_file_sorted
       end
     end
 
     def word_list_create_json_file
-      unless File.exist?(@word_list_file_json)
-        # Read file
-        word_list_file = File.read(@word_list_file_sorted)
+      return if File.exist?(@word_list_file_json)
 
-        # Create hash which will be final one for anagram queries
-        word_list_hash = {}
+      # Read file
+      word_list_file = File.read(@word_list_file_sorted)
 
-        # Going through sorted word list file
-        word_list_file.each_line do |line|
-          # I need sorted word and original phrase from this line
-          word_sorted = line.chomp.chars.sort(&:casecmp).join
-          word_original = line.chomp
+      # Create hash which will be final one for anagram queries
+      word_list_hash = {}
 
-          # Create key + anagrams array per word
-          word_list_hash[word_sorted] ||= []
+      # Going through sorted word list file
+      word_list_file.each_line do |line|
+        # I need sorted word and original phrase from this line
+        word_sorted = line.chomp.chars.sort(&:casecmp).join
+        word_original = line.chomp
 
-          # Add anagram word if not already added
-          word_list_hash[word_sorted] << word_original unless word_list_hash[word_sorted].include?(word_original)
-        end
+        # Create key + anagrams array per word
+        word_list_hash[word_sorted] ||= []
 
-        # Generate word_list.json so this file contains anagrams for word that visitor is expected to look at!
-        File.open(@word_list_file_json, 'w') do |f|
-          f.write(word_list_hash.to_json)
-        end
-
-        puts 'JSON file created successfully at ' + @word_list_file_json
+        # Add anagram word if not already added
+        word_list_hash[word_sorted] << word_original unless word_list_hash[word_sorted].include?(word_original)
       end
+
+      # Generate word_list.json so this file contains anagrams for word that visitor is expected to look at!
+      File.open(@word_list_file_json, 'w') do |f|
+        f.write(word_list_hash.to_json)
+      end
+
+      puts 'JSON file created successfully at ' + @word_list_file_json
     end
 
     def word_list_load_hash_from_json_file

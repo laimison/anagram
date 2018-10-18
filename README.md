@@ -11,3 +11,9 @@ At index page [http://localhost:3000](http://localhost:3000) assuming that Rails
 ## Run unit tests
 
 `bundle exec rspec`
+
+## Styling
+
+Code met rubocop styling based on configuration [rubocop.yml](rubocop.yml)
+
+`rubocop`
