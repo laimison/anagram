@@ -26,6 +26,6 @@ class AnagramsControllerTest < ActionDispatch::IntegrationTest
     get '/v1/anagrams', params: { words: %w[random_name crepitus paste kinship enlist boaster random_name2] }
 
     assert_response :success
-    assert_match(/random_name.*.*crepitus.*cuprites.*pictures.*piecrust.*paste.*pates.*peats.*septa.*spate.*tapes.*tepas.*kinship.*pinkish.*enlist.*elints.*inlets.*listen.*silent.*tinsel.*boaster.*boaters.*borates.*rebatos.*sorbate.*random_name2.*/, response.body)
+    assert_match(/random_name.*.*crepitus.*cuprites.*pictures.*paste.*pates.*peats.*septa.*spate.*tapes.*tepas.*kinship.*pinkish.*enlist.*elints.*inlets.*listen.*silent.*tinsel.*boaster.*boaters.*borates.*rebatos.*sorbate.*random_name2.*/, response.body)
   end
 end
