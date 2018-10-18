@@ -10,7 +10,7 @@ module Api::V1
 
         logger.info "Anagrams found: #{anagrams_found}"
 
-        render json: anagrams_found.to_s
+        render json: anagrams_found
       else
         render json: "No parameters specified or your parameter name is not 'words'"
       end
