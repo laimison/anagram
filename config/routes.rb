@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   scope module: 'api' do
     namespace :v1 do
-      resources :anagrams, only: [:index, :show]
+      resources :anagrams, only: %i[index show]
     end
   end
 

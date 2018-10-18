@@ -1,5 +1,5 @@
 puts 'Loading custom library AnagramsGenerator on startup and memory for fast access'
-MyAnagram = AnagramsGenerator::Generate.new()
+MyAnagram = AnagramsGenerator::Generate.new
 
 # It creates txt and json files only if they don't exist so Rails is loading faster from second time (first time should take up to 10 seconds for 4 MB file)
 # - consider to generate and place the files before Rails starting or by copying them by any suitable method if word list file becomes bigger
