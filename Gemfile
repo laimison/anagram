@@ -41,6 +41,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Run Shell command
 gem 'mixlib-shellout'
 
+# Styling
+gem 'rubocop'
+
+# DB is not used so leaving sqlite3 is fine / RSpec tests
 group :development do 
    gem 'sqlite3'
    gem 'rspec-rails'
